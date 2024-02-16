@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Your HTML Page</title>
+    </head>
+    <body>
+
+        <h1>Your Title</h1>
+
+        <label for="textBox">Enter Text:</label>
+        <input type="text" id="textBox" name="textBox">
+        <button onclick="submitText()">Enter</button>
+
+        <p id="outputLabel"></p>
+        <p id="numberDialed"></p>
+
+        <script>
+            function submitText() {
+                var inputText = document.getElementById("textBox").value;
+                document.getElementById("outputLabel").innerHTML = "You entered: " + inputText;
+
+                // Send message to parent with the entered text
+                parent.postMessage({
+                    searchTerm: inputText
+                }, '*');
+            }
+
+            window.addEventListener('message', function (event) {
+                switch (event.data.type) {
+                    case 'CLICK_TO_DIAL':
+                        makeCall({
+                            destination: event.data.payload.phoneNumber,
+                            destinationType: 'DIALABLE',
+                            prefix: '',
+                        });
+                        break;
+                }
+            });
+
+            function makeCall({ destination, destinationType, prefix }) {
+                // Assuming you have a label with the id "outputLabel" for displaying the phoneNumber
+                document.getElementById("numberDialed").innerHTML = "Calling: " + destination;
+                // Your other makeCall logic goes here
+            }
+        </script>
+    </body>
+</html>
