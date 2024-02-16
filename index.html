@@ -9,21 +9,21 @@
 
         <h1>Your Title</h1>
 
-        <label for="textBox">Enter Text:</label>
-        <input type="text" id="textBox" name="textBox">
-        <button onclick="submitText()">Enter</button>
+        <label for="searchTerm">Enter Search Term:</label>
+        <input type="text" id="searchTerm" name="searchTermInput">
+        <button onclick="submitSearchTerm()">Send to iFrame</button>
 
         <p id="outputLabel"></p>
+        <label>Click-To-Dial Number:</label>
         <p id="numberDialed"></p>
 
         <script>
-            function submitText() {
-                var inputText = document.getElementById("textBox").value;
-                document.getElementById("outputLabel").innerHTML = "You entered: " + inputText;
+            function submitSearchTerm() {
+                var searchTerm = document.getElementById("searchTermInput").value;
 
                 // Send message to parent with the entered text
                 parent.postMessage({
-                    searchTerm: inputText
+                    searchTerm: searchTerm
                 }, '*');
             }
 
@@ -40,8 +40,7 @@
             });
 
             function makeCall({ destination, destinationType, prefix }) {
-                // Assuming you have a label with the id "outputLabel" for displaying the phoneNumber
-                document.getElementById("numberDialed").innerHTML = "Calling: " + destination;
+                document.getElementById("numberDialed").innerHTML = destination;
                 // Your other makeCall logic goes here
             }
         </script>
