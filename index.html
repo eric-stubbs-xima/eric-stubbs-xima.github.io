@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>CCAC Plugin Example</title>
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCAC Plugin Example</title>
+</head>
+<body>
+    <div style="max-width: 400px; margin: 0 auto;">
 
         <h1>CCAC Plugin Example</h1>
 
@@ -21,32 +22,33 @@
         <label>Click-To-Dial Number:</label>
         <p id="numberDialed"></p>
 
-        <script>
-            function submitSearchTerm() {
-                var searchTerm = document.getElementById("searchTermInput").value;
+    </div>
 
-                // Send message to parent with the entered text
-                parent.postMessage({
-                    searchTerm: searchTerm
-                }, '*');
+    <script>
+        function submitSearchTerm() {
+            var searchTerm = document.getElementById("searchTermInput").value;
+            
+            parent.postMessage({
+                searchTerm: searchTerm
+            }, '*');
+        }
+
+        window.addEventListener('message', function (event) {
+            switch (event.data.type) {
+                case 'CLICK_TO_DIAL':
+                    makeCall({
+                        destination: event.data.payload.phoneNumber,
+                        destinationType: 'DIALABLE',
+                        prefix: '',
+                    });
+                    break;
             }
+        });
 
-            window.addEventListener('message', function (event) {
-                switch (event.data.type) {
-                    case 'CLICK_TO_DIAL':
-                        makeCall({
-                            destination: event.data.payload.phoneNumber,
-                            destinationType: 'DIALABLE',
-                            prefix: '',
-                        });
-                        break;
-                }
-            });
-
-            function makeCall({ destination, destinationType, prefix }) {
-                document.getElementById("numberDialed").innerHTML = destination;
-                // Your other makeCall logic goes here
-            }
-        </script>
-    </body>
+        function makeCall({ destination, destinationType, prefix }) {
+            document.getElementById("numberDialed").innerHTML = destination;
+            // Your other makeCall logic goes here
+        }
+    </script>
+</body>
 </html>
