@@ -3,15 +3,19 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Your HTML Page</title>
+        <title>CCAC Plugin Example</title>
     </head>
     <body>
 
-        <h1>Your Title</h1>
+        <h1>CCAC Plugin Example</h1>
+
+        <p>When you enter a search term here and click 'Send to iFrame', the message is sent to the surrounding Visualforce page, which does a screen pop and searches for whatever you choose. This simulates a search term coming in from a Contact Center application. </p>
 
         <label for="searchTerm">Enter Search Term:</label>
         <input type="text" id="searchTerm" name="searchTermInput">
         <button onclick="submitSearchTerm()">Send to iFrame</button>
+
+        <p>When you click a phone number on a Contact inside Salesforce, the number will be sent to this page and displayed below. If using a Contact Center, you would send the phone number to it and call it instead of simply displaying it here.</p>
 
         <p id="outputLabel"></p>
         <label>Click-To-Dial Number:</label>
